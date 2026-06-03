@@ -20,6 +20,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    const existingReservation =
+      await prisma.reservation.findFirst({
+        where: {
+          barberId: body.barberId,
+          date: new Date(body.date)
+        }
+      });
+
+    if (existingReservation) {
+      return NextResponse.json(
+        { error: "Time slot already booked" },
+        { status: 400 }
+      );
+    }
+
     const reservation = await prisma.reservation.create({
       data: {
         date: new Date(body.date),
