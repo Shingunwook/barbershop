@@ -15,3 +15,26 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    const customer = await prisma.customer.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        phone: body.phone,
+      },
+    });
+
+    return NextResponse.json(customer, { status: 201 });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Failed to create customer" },
+      { status: 500 }
+    );
+  }
+}

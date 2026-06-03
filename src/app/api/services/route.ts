@@ -15,3 +15,26 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    const service = await prisma.service.create({
+      data: {
+        name: body.name,
+        price: body.price,
+        duration: body.duration,
+      },
+    });
+
+    return NextResponse.json(service, { status: 201 });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Failed to create service" },
+      { status: 500 }
+    );
+  }
+}

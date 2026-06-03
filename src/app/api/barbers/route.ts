@@ -15,3 +15,25 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    const barber = await prisma.barber.create({
+      data: {
+        name: body.name,
+        experience: body.experience,
+      },
+    });
+
+    return NextResponse.json(barber, { status: 201 });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json(
+      { error: "Failed to create barber" },
+      { status: 500 }
+    );
+  }
+}
