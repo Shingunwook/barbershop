@@ -55,6 +55,7 @@ export default function Gallery() {
           {images.map((image, index) => (
 
             <div
+                key={image}
                 className="
                     group
                     relative
