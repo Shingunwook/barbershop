@@ -1,8 +1,81 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Reservar() {
+const [services, setServices] = useState([]);
+const [barbers, setBarbers] = useState([]);
+
+const [email, setEmail] = useState("");
+const [phone, setPhone] = useState("");
+
+const [name, setName] = useState("");
+
+const [serviceId, setServiceId] = useState("");
+const [barberId, setBarberId] = useState("");
+
+const [date, setDate] = useState("");
+const [time, setTime] = useState("");
+
+useEffect(() => {
+
+  fetch("/api/services")
+    .then((res) => res.json())
+    .then((data) => setServices(data));
+
+  fetch("/api/barbers")
+    .then((res) => res.json())
+    .then((data) => setBarbers(data));
+
+}, []);
+
+async function handleReservation() {
+
+    const reservationDate = new Date(
+
+        `${date}T${time}:00`
+
+    );
+
+  const res = await fetch("/api/reservations", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+        name,
+        email,
+        phone,
+        serviceId,
+        barberId,
+        date,
+        date: reservationDate,
+    }),
+
+  });
+
+  const data = await res.json();
+
+  console.log(data);
+
+  if (res.ok) {
+
+    alert("Reserva criada!");
+
+  } else {
+
+    alert(data.error);
+
+  }
+
+}
+
   return (
     <main className="min-h-screen bg-[#1E1E1E]">
 <div className="h-24 flex items-center justify-between px-10">
@@ -80,36 +153,131 @@ export default function Reservar() {
 
           <div className="mb-7">
 
+             <p className="mb-2 font-medium text-[#222222]">
+                Nome
+                </p>
+
+                <input
+                    type="text"
+
+                    value={name}
+
+                    onChange={(e) => setName(e.target.value)}
+
+                    className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    bg-white
+                    outline-none
+                    focus:border-[#FA8112]
+                    "
+                />
+
+                </div>
+
+
+                <div className="mb-7">
+
+                <p className="mb-2 font-medium text-[#222222]">
+                    Email
+                </p>
+
+                <input
+                    type="email"
+
+                    value={email}
+
+                    onChange={(e) => setEmail(e.target.value)}
+
+                    className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    bg-white
+                    outline-none
+                    focus:border-[#FA8112]
+                    "
+                />
+
+                </div>
+
+
+                <div className="mb-7">
+
+                <p className="mb-2 font-medium text-[#222222]">
+                    Telefone
+                </p>
+
+                <input
+                    type="text"
+
+                    value={phone}
+
+                    onChange={(e) => setPhone(e.target.value)}
+
+                    className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    bg-white
+                    outline-none
+                    focus:border-[#FA8112]
+                    "
+                />
+
             <p className="mb-2 font-medium text-[#222222]">
               Serviço
             </p>
 
             <select
-              className="
-                w-full
 
-                p-4
+                value={serviceId}
 
-                rounded-xl
+                onChange={(e) => setServiceId(e.target.value)}
 
-                bg-white
-                text-[#222222]
+                className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    bg-white
+                    text-[#222222]
+                    border-2
+                    border-gray-300
+                    outline-none
+                    focus:border-[#FA8112]
+                "
 
-                border-2
-                border-gray-300
+                >
 
-                outline-none
+                <option value="">
+                    Escolha um serviço
+                </option>
 
-                focus:border-[#FA8112]
-              "
-            >
-              <option>Corte Masculino</option>
+                {services.map((service) => (
 
-              <option>Barba</option>
+                    <option
 
-              <option>Corte + Barba</option>
+                    key={service.id}
 
-              <option>Corte Premium</option>
+                    value={service.id}
+
+                    >
+
+                    {service.name}
+
+                    </option>
+
+                ))}
 
             </select>
 
@@ -121,31 +289,44 @@ export default function Reservar() {
               Barbeiro
             </p>
 
-            <select
-              className="
-                w-full
+           <select
+                value={barberId}
 
-                p-4
+                onChange={(e) => setBarberId(e.target.value)}
 
-                rounded-xl
+                className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    bg-white
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    outline-none
+                    focus:border-[#FA8112]
+                "
 
-                bg-white
+                >
 
-                border-2
-                border-gray-300
-                text-[#222222]
+                <option value="">
+                    Escolha um barbeiro
+                </option>
 
-                outline-none
+                {barbers.map((barber) => (
 
-                focus:border-[#FA8112]
-              "
-            >
+                    <option
 
-              <option>João Silva</option>
+                    key={barber.id}
 
-              <option>Miguel Santos</option>
+                    value={barber.id}
 
-              <option>Carlos Pereira</option>
+                    >
+
+                    {barber.name}
+
+                    </option>
+
+                ))}
 
             </select>
 
@@ -158,23 +339,24 @@ export default function Reservar() {
             </p>
 
             <input
-              type="date"
 
-              className="
-                w-full
+                type="date"
 
-                p-4
+                value={date}
 
-                rounded-xl
+                onChange={(e) => setDate(e.target.value)}
 
-                border-2
-                border-gray-300
-                text-[#222222]
+                className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    outline-none
+                    focus:border-[#FA8112]
+                "
 
-                outline-none
-
-                focus:border-[#FA8112]
-              "
             />
 
           </div>
@@ -186,43 +368,61 @@ export default function Reservar() {
             </p>
 
             <select
-              className="
-                w-full
 
-                p-4
+                value={time}
 
-                rounded-xl
+                onChange={(e) => setTime(e.target.value)}
 
-                bg-white
+                className="
+                    w-full
+                    p-4
+                    rounded-xl
+                    bg-white
+                    border-2
+                    border-gray-300
+                    text-[#222222]
+                    outline-none
+                    focus:border-[#FA8112]
+                "
 
-                border-2
-                border-gray-300
-                text-[#222222]
+                >
 
-                outline-none
+                <option value="">
+                    Escolha uma hora
+                </option>
 
-                focus:border-[#FA8112]
-              "
-            >
+                <option value="09:00">
+                    09:00
+                </option>
 
-              <option>09:00</option>
+                <option value="10:00">
+                    10:00
+                </option>
 
-              <option>10:00</option>
+                <option value="11:00">
+                    11:00
+                </option>
 
-              <option>11:00</option>
+                <option value="14:00">
+                    14:00
+                </option>
 
-              <option>14:00</option>
+                <option value="15:00">
+                    15:00
+                </option>
 
-              <option>15:00</option>
-
-              <option>16:00</option>
+                <option value="16:00">
+                    16:00
+                </option>
 
             </select>
+
+            
 
           </div>
 
           <button
-
+            onClick={handleReservation}
             className="
 
               w-full

@@ -20,10 +20,38 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    let customer = await prisma.customer.findUnique({
+
+      where: {
+
+        email: body.email,
+
+      },
+
+    });
+
+    if (!customer) {
+
+  customer = await prisma.customer.create({
+
+    data: {
+
+      name: body.name,
+
+      email: body.email,
+
+      phone: body.phone,
+
+    },
+
+  });
+
+}
+
     const existingReservation =
       await prisma.reservation.findFirst({
         where: {
-          barberId: body.barberId,
+          barberId: Number(body.barberId),
           date: new Date(body.date)
         }
       });
@@ -38,9 +66,9 @@ export async function POST(request: Request) {
     const reservation = await prisma.reservation.create({
       data: {
         date: new Date(body.date),
-        barberId: body.barberId,
-        customerId: body.customerId,
-        serviceId: body.serviceId,
+        barberId: Number(body.barberId),
+        serviceId: Number(body.serviceId),
+        customerId: customer.id,
       },
     });
 
@@ -49,7 +77,7 @@ export async function POST(request: Request) {
     console.error(error);
 
     return NextResponse.json(
-      { error: "Failed to create reservation" },
+      { error: error.message },
       { status: 500 }
     );
   }

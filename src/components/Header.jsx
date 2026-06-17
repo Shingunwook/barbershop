@@ -22,17 +22,12 @@ export default function Header() {
       <div
           className="
           relative
-
           max-w-7xl
           mx-auto
-
           px-8 md:px-20
-
           h-25
-
           flex
           items-center
-
           justify-between
         "
       >
@@ -68,7 +63,6 @@ export default function Header() {
             text-[#FA8112]
             text-[14px]
             xl:text-[16px]
-
             hover:text-orange-400
 
             transition-colors
