@@ -12,7 +12,7 @@ const images = [
 export default function Gallery() {
   return (
     <section
-      id="galeria"
+      id="gallery"
       className="
         bg-[#FAFAFA]
         pt-[45px]

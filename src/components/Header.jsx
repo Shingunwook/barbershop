@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   FaInstagram,
@@ -58,9 +59,24 @@ export default function Header() {
           <a href="#gallery" className="transition-colors duration-300 hover:text-[#F5E7C6] text-[14px] xl:text-[16px]">Galeria</a>
         </nav>
 
-        <button className="hidden md:flex cursor-pointer text-[#FA8112] text-[14px] xl:text-[16px] hover:text-orange-400 transition-colors duration-300">
+        <Link
+          href="/reservar"
+          className="
+            hidden md:flex
+            cursor-pointer
+
+            text-[#FA8112]
+            text-[14px]
+            xl:text-[16px]
+
+            hover:text-orange-400
+
+            transition-colors
+            duration-300
+          "
+        >
           Marcar
-        </button>
+        </Link>
 
         <button
           onClick={() => setMenuOpen(!menuOpen)}

@@ -52,7 +52,7 @@ function BarberImage({ src, alt }) {
 export default function Barbers() {
   return (
     <section
-      id="barbeiros"
+      id="barbers"
       className="bg-white py-[60px]"
     >
       <div className="max-w-7xl mx-auto px-5">
@@ -74,6 +74,7 @@ export default function Barbers() {
 
         <div
           className="
+          text-center lg:text-left
           flex
           flex-col
           lg:flex-row
@@ -133,29 +134,30 @@ export default function Barbers() {
 
         {/* Miguel */}
 
-        <div
-          className="
-          flex
-          flex-col-reverse
-          lg:flex-row
-          items-center
-          justify-center
-          gap-[20px]
-          mb-[40px]
-          "
-        >
+            <div
+              className="
+              flex
+              flex-col-reverse
+              lg:flex-row
+              items-center
+              justify-center
+              gap-[20px]
+              mb-[40px]
+              "
+            >
 
-          <div
-            className="
-            w-[331px]
-            text-right
-            lg:text-right
-            flex
-            flex-col
-            items-end
-            mr-[20px]
-            "
-          >
+            <div
+              className="
+                w-[331px]
+                text-center lg:text-right
+                flex
+                flex-col
+                items-center
+
+                lg:items-end
+                lg:mr-[20px]
+              "
+            >
 
             <h3
               className="
@@ -207,6 +209,7 @@ export default function Barbers() {
         <div
           className="
           flex
+          text-center lg:text-left
           flex-col
           lg:flex-row
           items-center
