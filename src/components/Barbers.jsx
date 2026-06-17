@@ -57,8 +57,6 @@ export default function Barbers() {
     >
       <div className="max-w-7xl mx-auto px-5">
 
-        {/* Заголовок */}
-
         <h2
           className="
           text-center
