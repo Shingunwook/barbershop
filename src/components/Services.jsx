@@ -109,7 +109,6 @@ export default function Services() {
                   relative
                   w-full
                   h-[167px]
-
                   mb-[8px]
                 "
               >
@@ -146,11 +145,8 @@ export default function Services() {
                     font-inter
                     text-[16px]
                     text-black
-
                     leading-snug
-
                     min-h-[72px]
-
                     mb-[13px]
                   "
                 >
@@ -173,26 +169,20 @@ export default function Services() {
                   className="
                     w-[206px]
                     h-[30px]
-
                     bg-[#FA8112]
-
                     font-roadrage
                     text-[24px]
                     text-white
-
                     flex
                     items-center
                     justify-center
 
                     mb-[20px]
-
                     transition-all
                     duration-300
-
                     hover:bg-[#E67300]
                     hover:-translate-y-1
                     hover:shadow-lg
-
                     cursor-pointer
                   "
                 >

@@ -3,15 +3,24 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const reservations = await prisma.reservation.findMany();
+    const reservations = await prisma.reservation.findMany({
+      include: {
+        customer: true,
+        barber: true,
+        service: true,
+      },
+    });
 
     return NextResponse.json(reservations);
-  } catch (error) {
+  }  catch (error) {
     console.error(error);
-
     return NextResponse.json(
-      { error: "Failed to fetch reservations" },
-      { status: 500 }
+      {
+        error: "Failed to fetch reservations",
+      },
+      {
+        status: 500,
+      }
     );
   }
 }
