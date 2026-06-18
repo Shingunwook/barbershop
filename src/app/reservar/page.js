@@ -4,8 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Reservar() {
+const searchParams = useSearchParams();
+
 const [services, setServices] = useState([]);
 const [barbers, setBarbers] = useState([]);
 
@@ -20,6 +23,9 @@ const [barberId, setBarberId] = useState("");
 const [date, setDate] = useState("");
 const [time, setTime] = useState("");
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^[0-9]{9,15}$/;
+
 useEffect(() => {
 
   fetch("/api/services")
@@ -32,18 +38,48 @@ useEffect(() => {
 
 }, []);
 
+useEffect(() => {
+  const selectedServiceId = searchParams.get("serviceId");
+
+  if (selectedServiceId) {
+    setServiceId(selectedServiceId);
+  }
+
+}, [searchParams]);
+
 async function handleReservation() {
 
-    const reservationDate = new Date(
+  if (
+    !name ||
+    !email ||
+    !phone ||
+    !serviceId ||
+    !barberId ||
+    !date ||
+    !time
+  ) {
 
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  if (!emailRegex.test(email)) {
+    alert("Email inválido!");
+    return;
+  }
+
+  if (!phoneRegex.test(phone)) {
+    alert("Telefone inválido!");
+    return;
+  }
+
+    const reservationDate = new Date(
         `${date}T${time}:00`
 
     );
 
   const res = await fetch("/api/reservations", {
-
     method: "POST",
-
     headers: {
       "Content-Type": "application/json",
     },
@@ -65,16 +101,32 @@ async function handleReservation() {
   console.log(data);
 
   if (res.ok) {
-
     alert("Reserva criada!");
-
   } else {
-
     alert(data.error);
-
   }
-
 }
+
+const hours = [
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+];
+
 
   return (
     <main className="min-h-screen bg-[#1E1E1E]">
@@ -101,11 +153,8 @@ async function handleReservation() {
       flex
       items-center
       gap-2
-
       text-white
-
       hover:text-[#FA8112]
-
       transition-colors
       duration-300
     "
@@ -123,13 +172,9 @@ async function handleReservation() {
           className="
             w-full
             max-w-[600px]
-
             bg-[#ECECEC]
-
             rounded-[30px]
-
             shadow-lg
-
             px-10
             py-12
           "
@@ -138,13 +183,9 @@ async function handleReservation() {
           <h1
             className="
               text-center
-
               text-[38px]
-
               font-bold
-
               text-[#222222]
-
               mb-10
             "
           >
@@ -159,9 +200,7 @@ async function handleReservation() {
 
                 <input
                     type="text"
-
                     value={name}
-
                     onChange={(e) => setName(e.target.value)}
 
                     className="
@@ -188,9 +227,7 @@ async function handleReservation() {
 
                 <input
                     type="email"
-
                     value={email}
-
                     onChange={(e) => setEmail(e.target.value)}
 
                     className="
@@ -217,11 +254,8 @@ async function handleReservation() {
 
                 <input
                     type="text"
-
                     value={phone}
-
                     onChange={(e) => setPhone(e.target.value)}
-
                     className="
                     w-full
                     p-4
@@ -266,17 +300,11 @@ async function handleReservation() {
                 {services.map((service) => (
 
                     <option
-
-                    key={service.id}
-
-                    value={service.id}
-
+                      key={service.id}
+                      value={service.id}
                     >
-
-                    {service.name}
-
+                      {service.name}
                     </option>
-
                 ))}
 
             </select>
@@ -315,17 +343,11 @@ async function handleReservation() {
                 {barbers.map((barber) => (
 
                     <option
-
-                    key={barber.id}
-
-                    value={barber.id}
-
+                      key={barber.id}
+                      value={barber.id}
                     >
-
-                    {barber.name}
-
+                      {barber.name}
                     </option>
-
                 ))}
 
             </select>
@@ -339,13 +361,10 @@ async function handleReservation() {
             </p>
 
             <input
-
                 type="date"
-
+                min={new Date().toISOString().split("T")[0]}
                 value={date}
-
                 onChange={(e) => setDate(e.target.value)}
-
                 className="
                     w-full
                     p-4
@@ -356,112 +375,66 @@ async function handleReservation() {
                     outline-none
                     focus:border-[#FA8112]
                 "
-
             />
-
           </div>
 
           <div className="mb-10">
-
             <p className="mb-2 font-medium text-[#222222]">
               Hora
             </p>
-
-            <select
-
+              <select
                 value={time}
-
                 onChange={(e) => setTime(e.target.value)}
-
                 className="
-                    w-full
-                    p-4
-                    rounded-xl
-                    bg-white
-                    border-2
-                    border-gray-300
-                    text-[#222222]
-                    outline-none
-                    focus:border-[#FA8112]
-                "
-
-                >
-
+                w-full
+                p-4
+                rounded-xl
+              bg-white
+                border-2
+                border-gray-300
+                text-[#222222]
+                outline-none
+                focus:border-[#FA8112]
+              "
+              >
                 <option value="">
-                    Escolha uma hora
+                  Escolha uma hora
                 </option>
 
-                <option value="09:00">
-                    09:00
-                </option>
-
-                <option value="10:00">
-                    10:00
-                </option>
-
-                <option value="11:00">
-                    11:00
-                </option>
-
-                <option value="14:00">
-                    14:00
-                </option>
-
-                <option value="15:00">
-                    15:00
-                </option>
-
-                <option value="16:00">
-                    16:00
-                </option>
-
-            </select>
-
-            
-
+                {hours.map((hour) => (
+                  <option
+                    key={hour}
+                    value={hour}
+                  >
+                    {hour}
+                  </option>
+                ))}
+              </select>
           </div>
 
           <button
             onClick={handleReservation}
             className="
-
               w-full
-
               h-[70px]
-
               rounded-[25px]
-
               bg-[#222222]
-
               border-[4px]
               border-[#FAF3E1]
-
               text-[#FA8112]
-
               text-[40px]
-
               font-roadrage
-
               transition-all
-
               duration-300
-
               hover:bg-[#FA8112]
-
               hover:text-white
-
               cursor-pointer
 
             "
-
           >
-
             Marcar Agora
-
           </button>
-
         </div>
-
       </div>
 
     </main>

@@ -11,9 +11,7 @@ export default function ReservationsPage() {
   }
 
   useEffect(() => {
-
     fetchReservations();
-
   }, []);
 
   async function handleStatusChange(id, status) {
@@ -51,10 +49,9 @@ export default function ReservationsPage() {
       const data = await res.json();
       alert(data.error);
     }
-
   }
-
   return (
+
     <main className="min-h-screen bg-[#1E1E1E] text-[#555] p-10">
 
       <div className="
@@ -143,14 +140,12 @@ export default function ReservationsPage() {
                         e.target.value
                       )
                     }
-
                     className="
                       p-2
                       rounded-lg
                       border
                       bg-white
                     "
-
                   >
 
                     <option value="Pending">
@@ -164,20 +159,15 @@ export default function ReservationsPage() {
                     <option value="Cancelled">
                       Cancelled
                     </option>
-
                   </select>
-
                 </td>
-
                 <td>
-
                   <button
                     onClick={() =>
                       handleDelete(
                         reservation.id
                       )
                     }
-
                     className="
                       bg-red-500
                       text-white
@@ -187,11 +177,8 @@ export default function ReservationsPage() {
                       hover:bg-red-600
                       transition-all
                     "
-
                   >
-
                     Delete
-
                   </button>
                 </td>
               </tr>
@@ -199,7 +186,6 @@ export default function ReservationsPage() {
           </tbody>
         </table>
       </div>
-
     </main>
 
   );

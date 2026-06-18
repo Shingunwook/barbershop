@@ -64,3 +64,55 @@ export async function DELETE(request: Request) {
         success: true,
     });
 }
+
+export async function PATCH(request: Request) {
+
+  try {
+
+    const body = await request.json();
+
+    const service = await prisma.service.update({
+
+      where: {
+
+        id: Number(body.id),
+
+      },
+
+      data: {
+
+        name: body.name,
+
+        price: Number(body.price),
+
+        duration: Number(body.duration),
+
+      },
+
+    });
+
+    return NextResponse.json(service);
+
+  } catch (error) {
+
+    console.error(error);
+
+    return NextResponse.json(
+
+      {
+
+        error: "Failed to update service",
+
+      },
+
+      {
+
+        status: 500,
+
+      }
+
+    );
+
+  }
+
+}

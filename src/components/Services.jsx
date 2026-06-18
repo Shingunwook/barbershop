@@ -1,50 +1,51 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const services = [
   {
+    id: 6,
     title: "Corte de Cabelo",
-    description:
-      "Corte moderno ou clássico, adaptado ao seu estilo e preferências.",
+    description: "Corte moderno ou clássico, adaptado ao seu estilo e preferências.",
     price: "15€",
     image: "/services/corte.jpg",
   },
 
   {
+    id: 9,
     title: "Barba",
-    description:
-      "Tratamento e definição da barba para um visual cuidado e elegante.",
+    description: "Tratamento e definição da barba para um visual cuidado e elegante.",
     price: "10€",
     image: "/services/barba.jpg",
   },
 
   {
+    id: 10,
     title: "Corte + Barba",
-    description:
-      "A combinação perfeita para uma renovação completa do seu visual.",
+    description: "A combinação perfeita para uma renovação completa do seu visual.",
     price: "20€",
     image: "/services/corteBarba.jpg",
   },
 
   {
+    id: 11,
     title: "Corte Infantil",
-    description:
-      "Corte de cabelo para crianças num ambiente confortável e acolhedor.",
+    description: "Corte de cabelo para crianças num ambiente confortável e acolhedor.",
     price: "12€",
     image: "/services/corteInfantil.jpg",
   },
 
   {
+    id: 12,
     title: "Serviço Premium",
-    description:
-      "Inclui corte, barba, lavagem e finalização com produtos premium.",
+    description: "Inclui corte, barba, lavagem e finalização com produtos premium.",
     price: "30€",
     image: "/services/cortePremium.jpg",
   },
 
   {
+    id: 13,
     title: "Tratamento Capilar",
-    description:
-      "Cuidados especiais para fortalecer e revitalizar o cabelo.",
+    description: "Cuidados especiais para fortalecer e revitalizar o cabelo.",
     price: "18€",
     image: "/services/Capilar.jpg",
   },
@@ -165,29 +166,36 @@ export default function Services() {
                   {service.price}
                 </p>
 
-                <button
+                <Link
+                  href={`/reservar?serviceId=${service.id}`}
                   className="
                     w-[206px]
                     h-[30px]
+
                     bg-[#FA8112]
+
                     font-roadrage
                     text-[24px]
                     text-white
+
                     flex
                     items-center
                     justify-center
 
                     mb-[20px]
+
                     transition-all
                     duration-300
+
                     hover:bg-[#E67300]
                     hover:-translate-y-1
                     hover:shadow-lg
+
                     cursor-pointer
                   "
                 >
                   marcar agora
-                </button>
+                </Link>
 
               </div>
             </div>

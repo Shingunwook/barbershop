@@ -9,6 +9,8 @@ export default function ServicesPage() {
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("");
 
+  const [editingId, setEditingId] = useState(null);
+
   async function fetchServices() {
     const res = await fetch("/api/services");
     const data = await res.json();
@@ -70,6 +72,44 @@ export default function ServicesPage() {
 
   }
 
+  async function handleUpdate() {
+
+  const res = await fetch("/api/services", {
+
+    method: "PATCH",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+
+      id: editingId,
+
+      name,
+
+      price: Number(price),
+
+      duration: Number(duration),
+
+    }),
+
+  });
+
+  if (res.ok) {
+
+    setEditingId(null);
+
+    setName("");
+    setPrice("");
+    setDuration("");
+
+    fetchServices();
+
+  }
+
+}
+
   return (
     <main className="min-h-screen bg-[#1E1E1E] py-12 px-5">
 
@@ -108,22 +148,32 @@ export default function ServicesPage() {
         </div>
 
         <button
-          onClick={handleAddService}
-          className="
-            w-full h-[60px] mb-10
-            rounded-[20px]
-            bg-[#222222]
-            text-[#FA8112]
-            font-bold
+            onClick={
+              editingId
+                ? handleUpdate
+                : handleAddService
+            }
 
-            hover:bg-[#FA8112]
-            hover:text-white
+            className="
+              w-full
+              mb-6
+              py-5
 
-            transition-all
-            cursor-pointer
-          "
-        >
-          Adicionar Serviço
+              bg-[#222222]
+              text-[#FA8112]
+              rounded-[20px]
+              font-semibold
+              hover:bg-[#FA8112]
+              hover:text-white
+              transition-all
+              cursor-pointer
+            "
+          >
+            {
+              editingId
+                ? "Salvar"
+                : "Adicionar Serviço"
+            }
         </button>
 
         <table className="w-full text-center">
@@ -162,21 +212,60 @@ export default function ServicesPage() {
                   {service.duration} min
                 </td>
 
-                <td>
-                  <button
-                    onClick={() => handleDelete(service.id)}
-                    className="
-                      px-4 py-2
-                      rounded-lg
-                      bg-red-500
-                      text-white
-                      hover:bg-red-600
-                      transition-all
-                      cursor-pointer
-                    "
-                  >
-                    Delete
-                  </button>
+                <td className="py-5">
+
+                <div className="flex justify-center items-center gap-3">
+
+                    <button
+
+                      onClick={() => {
+
+                        setEditingId(service.id);
+
+                        setName(service.name);
+
+                        setPrice(service.price);
+
+                        setDuration(service.duration);
+
+                      }}
+
+                      className="
+                        bg-blue-500
+                        text-white
+                        px-4
+                        cursor-pointer
+                        py-2
+                        rounded-xl
+                        hover:bg-blue-600
+                      "
+                    >
+
+                      Edit
+
+                    </button>
+
+                    <button
+
+                      onClick={() => handleDelete(service.id)}
+
+                      className="
+                        bg-red-500
+                        text-white
+                        px-4
+                        cursor-pointer
+                        py-2
+                        rounded-xl
+                        hover:bg-red-600
+                      "
+                    >
+
+                      Delete
+
+                    </button>
+
+                </div>
+
                 </td>
 
               </tr>

@@ -6,6 +6,13 @@ export default function BarbersPage() {
   const [barbers, setBarbers] = useState([]);
   const [name, setName] = useState("");
   const [experience, setExperience] = useState("");
+  const [editingId, setEditingId] = useState(null);
+
+  function handleEdit(barber) {
+    setEditingId(barber.id);
+    setName(barber.name);
+    setExperience(barber.experience);
+  }
 
   useEffect(() => {
     fetchBarbers();
@@ -37,11 +44,35 @@ export default function BarbersPage() {
       fetchBarbers();
     }
      else {
-      
       alert("Erro ao adicionar");
     }
 
   }
+
+  async function handleUpdate() {
+
+  const res = await fetch("/api/barbers", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      id: editingId,
+      name,
+      experience: Number(experience),
+    }),
+
+  });
+
+  if (res.ok) {
+    setEditingId(null);
+    setName("");
+    setExperience("");
+    fetchBarbers();
+  }
+
+}
 
   async function handleDelete(id) {
     const res = await fetch(`/api/barbers?id=${id}`, {
@@ -115,23 +146,31 @@ export default function BarbersPage() {
 
           />
 
-          <button
-            onClick={handleAddBarber}
-            className="
-              bg-[#222222]
-              text-[#FA8112]
-              rounded-xl
-              font-bold
-              hover:bg-[#FA8112]
-              hover:text-white
-              transition-all
-              cursor-pointer
-            "
-
-          >
-
-            Adicionar Barbeiro
-          </button>
+<button
+  onClick={
+    editingId
+      ? handleUpdate
+      : handleAddBarber
+  }
+  className="
+    w-full
+    bg-[#222222]
+    text-[#FA8112]
+    py-5
+    rounded-[20px]
+    font-semibold
+    hover:bg-[#FA8112]
+    hover:text-white
+    transition-all
+    cursor-pointer
+  "
+>
+  {
+    editingId
+      ? "Salvar"
+      : "Adicionar Barbeiro"
+  }
+</button>
         </div>
 
         <table className="w-full">
@@ -167,22 +206,40 @@ export default function BarbersPage() {
                   {barber.experience} anos
                 </td>
 
-                <td>
+                <td className="flex justify-center gap-3 py-4">
+
                   <button
-                    onClick={() => handleDelete(barber.id)}
+                    onClick={() => handleEdit(barber)}
                     className="
-                      bg-red-500
+                      bg-blue-500
                       text-white
-                      px-5
+                      px-4
                       py-2
                       rounded-xl
-                      hover:bg-red-600
+                      hover:bg-blue-600
                       transition-all
                       cursor-pointer
                     "
                   >
-                    Delete
+                    Edit
                   </button>
+
+                  <button
+                      onClick={() => handleDelete(barber.id)}
+                      className="
+                        bg-red-500
+                        text-white
+                        px-4
+                        py-2
+                        rounded-xl
+                        hover:bg-red-600
+                        transition-all
+                        cursor-pointer
+                      "
+                    >
+                      Delete
+                  </button>
+
                 </td>
 
               </tr>

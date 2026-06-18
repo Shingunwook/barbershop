@@ -91,111 +91,113 @@ export default function Header() {
       </div>
       
 
-<div
-  className={`
-    md:hidden
-    absolute
-    top-full
-    left-0
-    w-full
-    bg-[#222222]
-    shadow-xl
-    z-50
+      <div
+        className={`
+          md:hidden
+          absolute
+          top-full
+          left-0
+          w-full
+          bg-[#222222]
+          shadow-xl
+          z-50
 
-    overflow-hidden
+          overflow-hidden
 
-    transition-all
-    duration-300
-
-    ${
-      menuOpen
-        ? "max-h-[500px] opacity-100 py-8"
-        : "max-h-0 opacity-0 py-0"
-    }
-  `}
->
-
-  <div className="flex flex-col items-center gap-5 px-10">
-
-    <a
-      href="#inicio"
-      onClick={() => setMenuOpen(false)}
-      className={mobileLink}
-    >
-      Início
-    </a>
-
-    <a
-      href="#services"
-      onClick={() => setMenuOpen(false)}
-      className={mobileLink}
-    >
-      Serviços
-    </a>
-
-    <a
-      href="#barbers"
-      onClick={() => setMenuOpen(false)}
-      className={mobileLink}
-    >
-      Barbeiros
-    </a>
-
-    <a
-      href="#gallery"
-      onClick={() => setMenuOpen(false)}
-      className={mobileLink}
-    >
-      Galeria
-    </a>
-
-    <button
-      className="
-        cursor-pointer
-        text-[#FA8112]
-        font-medium
-        hover:text-orange-400
-        transition-colors
-        duration-300
-      "
-    >
-      Marcar
-    </button>
-
-    <div className="flex gap-6 text-[22px] mt-2">
-
-      <FaInstagram
-        className="
-          cursor-pointer
-          hover:text-[#FA8112]
-          transition-colors
+          transition-all
           duration-300
-        "
-      />
 
-      <FaYoutube
-        className="
-          cursor-pointer
-          hover:text-[#FA8112]
-          transition-colors
-          duration-300
-        "
-      />
+          ${
+            menuOpen
+              ? "max-h-[500px] opacity-100 py-8"
+              : "max-h-0 opacity-0 py-0"
+          }
+        `}
+      >
 
-      <FaFacebookF
-        className="
-          cursor-pointer
-          hover:text-[#FA8112]
-          transition-colors
-          duration-300
-        "
-      />
+        <div className="flex flex-col items-center gap-5 px-10">
 
-    </div>
+          <a
+            href="#inicio"
+            onClick={() => setMenuOpen(false)}
+            className={mobileLink}
+          >
+            Início
+          </a>
 
-</div>
+          <a
+            href="#services"
+            onClick={() => setMenuOpen(false)}
+            className={mobileLink}
+          >
+            Serviços
+          </a>
 
-  </div>
-    </header>
-  );
+          <a
+            href="#barbers"
+            onClick={() => setMenuOpen(false)}
+            className={mobileLink}
+          >
+            Barbeiros
+          </a>
+
+          <a
+            href="#gallery"
+            onClick={() => setMenuOpen(false)}
+            className={mobileLink}
+          >
+            Galeria
+          </a>
+
+          <Link
+            href="/reservar"
+            onClick={() => setMenuOpen(false)}
+            className="
+              cursor-pointer
+              text-[#FA8112]
+              font-medium
+              hover:text-orange-400
+              transition-colors
+              duration-300
+            "
+          >
+            Marcar
+          </Link>
+
+          <div className="flex gap-6 text-[22px] mt-2">
+
+            <FaInstagram
+              className="
+                cursor-pointer
+                hover:text-[#FA8112]
+                transition-colors
+                duration-300
+              "
+            />
+
+            <FaYoutube
+              className="
+                cursor-pointer
+                hover:text-[#FA8112]
+                transition-colors
+                duration-300
+              "
+            />
+
+            <FaFacebookF
+              className="
+                cursor-pointer
+                hover:text-[#FA8112]
+                transition-colors
+                duration-300
+              "
+            />
+
+          </div>
+
+      </div>
+
+        </div>
+          </header>
+        );
 }

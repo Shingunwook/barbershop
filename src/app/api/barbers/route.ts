@@ -57,3 +57,39 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+export async function PATCH(request: Request) {
+
+  try {
+    const body = await request.json();
+    const barber = await prisma.barber.update({
+
+      where: {
+        id: body.id,
+      },
+
+      data: {
+        name: body.name,
+        experience: Number(body.experience),
+      },
+
+    });
+
+    return NextResponse.json(barber);
+
+  } catch (error) {
+
+    console.error(error);
+
+    return NextResponse.json(
+      {
+        error: "Erro ao atualizar",
+      },
+
+      {
+        status: 500,
+      }
+    );
+
+  }
+}
