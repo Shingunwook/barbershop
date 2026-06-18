@@ -25,6 +25,7 @@ model customer {
 model reservation {
   id         Int      @id @default(autoincrement())
   date       DateTime
+  status String @default("Pending")
   barberId   Int
   serviceId  Int
   customerId Int

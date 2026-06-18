@@ -110,11 +110,8 @@ export default function Admin() {
             >
               Logout
           </button>
-
         </div>
-
       </div>
-
     </main>
   );
 }

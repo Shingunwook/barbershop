@@ -28,31 +28,20 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
     let customer = await prisma.customer.findUnique({
-
       where: {
-
         email: body.email,
-
       },
-
     });
 
     if (!customer) {
 
   customer = await prisma.customer.create({
-
     data: {
-
       name: body.name,
-
       email: body.email,
-
       phone: body.phone,
-
     },
-
   });
 
 }
@@ -88,6 +77,69 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: error.message },
       { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = Number(searchParams.get("id"));
+
+    await prisma.reservation.delete({
+      where: {
+        id,
+      },
+    });
+
+    return NextResponse.json({
+      message: "Reservation deleted",
+    });
+
+  } catch (error) {
+
+    console.error(error);
+    return NextResponse.json(
+
+      {
+        error: "Erro ao eliminar",
+      },
+
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    console.log(body);
+    const reservation = await prisma.reservation.update({
+
+      where: {
+        id: Number(body.id),
+      },
+
+      data: {
+        status: body.status,
+      },
+    });
+
+    return NextResponse.json(reservation);
+
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+
+      {
+        error: "Erro ao atualizar",
+      },
+
+      {
+        status: 500,
+      }
     );
   }
 }

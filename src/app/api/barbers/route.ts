@@ -19,20 +19,40 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
     const barber = await prisma.barber.create({
       data: {
         name: body.name,
-        experience: body.experience,
+        experience: Number(body.experience),
       },
     });
-
     return NextResponse.json(barber, { status: 201 });
-  } catch (error) {
-    console.error(error);
 
+  } catch (error) {
     return NextResponse.json(
-      { error: "Failed to create barber" },
+      { error: "Erro ao criar barbeiro" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = Number(searchParams.get("id"));
+    await prisma.barber.delete({
+
+      where: {
+        id,
+      },
+
+    });
+    return NextResponse.json({
+      message: "Barbeiro eliminado",
+    });
+  }
+   catch {
+    return NextResponse.json(
+      { error: "Erro ao eliminar" },
       { status: 500 }
     );
   }

@@ -38,3 +38,29 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const id = Number(searchParams.get("id"));
+
+    if (!id) {
+        return Response.json(
+            {
+                error: "ID is required",
+            },
+            {
+                status: 400,
+            }
+        );
+    }
+
+    await prisma.service.delete({
+        where: {
+            id: Number(id),
+        },
+    });
+
+    return Response.json({
+        success: true,
+    });
+}
