@@ -29,7 +29,7 @@ const [time, setTime] = useState("");
 useEffect(() => {
   const params = new URLSearchParams(window.location.search);
 
-  const selectedServiceId = params.get("serviceId");
+  const selectedServiceId = Number(params.get("serviceId"));
 
   if (selectedServiceId) {
     setServiceId(selectedServiceId);
