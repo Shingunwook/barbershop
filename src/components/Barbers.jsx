@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 function BarberImage({ src, alt }) {
   return (
     <div
@@ -16,19 +14,16 @@ function BarberImage({ src, alt }) {
       hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)]
       "
     >
-      <Image
+      <img
         src={src}
         alt={alt}
         width={402}
         height={268}
-        unoptimized
         className="
-        object-cover
-
-        transition-transform
-        duration-300
-
-        group-hover:scale-[1.03]
+          object-cover
+          transition-transform
+          duration-300
+          group-hover:scale-[1.03]
         "
       />
 
