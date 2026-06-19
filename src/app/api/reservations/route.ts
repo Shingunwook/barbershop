@@ -1,4 +1,5 @@
 import { prisma } from "../../../lib/prisma";
+import { transporter } from "../../../lib/mail";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -10,7 +11,7 @@ export async function GET() {
         service: true,
       },
     });
-
+    
     return NextResponse.json(reservations);
   }  catch (error) {
     console.error(error);
@@ -33,6 +34,8 @@ export async function POST(request: Request) {
         email: body.email,
       },
     });
+
+    
 
     if (!customer) {
 
@@ -68,6 +71,39 @@ export async function POST(request: Request) {
         serviceId: Number(body.serviceId),
         customerId: customer.id,
       },
+    });
+
+    const service = await prisma.service.findUnique({
+      where: {
+        id: Number(body.serviceId),
+      },
+    });
+
+    const barber = await prisma.barber.findUnique({
+      where: {
+        id: Number(body.barberId),
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: body.email,
+      subject: "Reserva Confirmada - Black Blade",
+      html: `
+        <h1>BLACK BLADE</h1>
+        <h2>Reserva Confirmada</h2>
+        <p><strong>Nome:</strong> ${body.name}</p>
+        <p><strong>Serviço:</strong> ${service?.name}</p>
+        <p><strong>Barbeiro:</strong> ${barber?.name}</p>
+        <p><strong>Data:</strong>
+          ${new Date(body.date).toLocaleString("pt-PT")}
+        </p>
+        <br>
+        <p>
+          Obrigado por escolher a
+          <strong>Black Blade</strong>.
+        </p>
+      `,
     });
 
     return NextResponse.json(reservation, { status: 201 });
