@@ -1,13 +1,22 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 export default function Reservar() {
-const searchParams = useSearchParams();
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  const selectedServiceId = params.get("serviceId");
+
+  if (selectedServiceId) {
+    setServiceId(selectedServiceId);
+  }
+}, []);
 
 const [services, setServices] = useState([]);
 const [barbers, setBarbers] = useState([]);
