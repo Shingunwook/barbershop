@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const services = [
   {
-    id: 6,
+    id: 1,
     title: "Corte de Cabelo",
     description: "Corte moderno ou clássico, adaptado ao seu estilo e preferências.",
     price: "15€",
@@ -11,7 +11,7 @@ const services = [
   },
 
   {
-    id: 9,
+    id: 2,
     title: "Barba",
     description: "Tratamento e definição da barba para um visual cuidado e elegante.",
     price: "10€",
@@ -19,7 +19,7 @@ const services = [
   },
 
   {
-    id: 10,
+    id: 3,
     title: "Corte + Barba",
     description: "A combinação perfeita para uma renovação completa do seu visual.",
     price: "20€",
@@ -27,7 +27,7 @@ const services = [
   },
 
   {
-    id: 11,
+    id: 4,
     title: "Corte Infantil",
     description: "Corte de cabelo para crianças num ambiente confortável e acolhedor.",
     price: "12€",
@@ -35,7 +35,7 @@ const services = [
   },
 
   {
-    id: 12,
+    id: 5,
     title: "Serviço Premium",
     description: "Inclui corte, barba, lavagem e finalização com produtos premium.",
     price: "30€",
@@ -43,7 +43,7 @@ const services = [
   },
 
   {
-    id: 13,
+    id: 6,
     title: "Tratamento Capilar",
     description: "Cuidados especiais para fortalecer e revitalizar o cabelo.",
     price: "18€",
