@@ -7,16 +7,10 @@ import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^[0-9]{9,15}$/;
+
 export default function Reservar() {
-useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-
-  const selectedServiceId = params.get("serviceId");
-
-  if (selectedServiceId) {
-    setServiceId(selectedServiceId);
-  }
-}, []);
 
 const [services, setServices] = useState([]);
 const [barbers, setBarbers] = useState([]);
@@ -32,8 +26,15 @@ const [barberId, setBarberId] = useState("");
 const [date, setDate] = useState("");
 const [time, setTime] = useState("");
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^[0-9]{9,15}$/;
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+
+  const selectedServiceId = params.get("serviceId");
+
+  if (selectedServiceId) {
+    setServiceId(selectedServiceId);
+  }
+}, []);
 
 useEffect(() => {
 
@@ -46,15 +47,6 @@ useEffect(() => {
     .then((data) => setBarbers(data));
 
 }, []);
-
-useEffect(() => {
-  const selectedServiceId = searchParams.get("serviceId");
-
-  if (selectedServiceId) {
-    setServiceId(selectedServiceId);
-  }
-
-}, [searchParams]);
 
 async function handleReservation() {
 
