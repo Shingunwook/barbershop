@@ -21,6 +21,7 @@ function BarberImage({ src, alt }) {
         alt={alt}
         width={402}
         height={268}
+        unoptimized
         className="
         object-cover
 
