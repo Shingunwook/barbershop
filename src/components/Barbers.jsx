@@ -86,7 +86,7 @@ export default function Barbers() {
         >
 
             <BarberImage
-                src="/barbers/joao.jpg"
+                src="/barbers/Joao.jpg"
                 alt="João Silva"
             />
 
@@ -198,7 +198,7 @@ export default function Barbers() {
           </div>
 
             <BarberImage
-                src="/barbers/miguel.jpg"
+                src="/barbers/Miguel.jpg"
                 alt="Miguel Santos"
             />
 
@@ -219,7 +219,7 @@ export default function Barbers() {
         >
 
             <BarberImage
-                src="/barbers/andre.jpg"
+                src="/barbers/Andre.jpg"
                 alt="André Costa"
             />
 
